@@ -131,3 +131,37 @@ docker rm -f {container-name}
 ```
 
 ### Image-metadata
+Image : 실제 압축되어 있는 데이터
+Metadata : 이미지에 대한 정보(데이터에 대한 데이터)
+
+<p align="center">
+  <img src="./imgs/metadata.png" width="100%">
+</p>
+
+- env : 환결 설정 정보, key-value 구조
+- cmd : 이미지를 컨테이너로 실행할 때 명령어
+
+### Metadata Command
+
+```bash
+# 이미지 세부 정보 조회
+docker image inspect {image-name}
+
+# 컨테이너 세부 정보 조회
+docker container inspect {container-name}
+
+# 컨테이너 실행 시 메타데이터의 cmd 덮어쓰기
+docker run {image-name} (command)
+
+# 컨테이너 실행 시 메타데이터의 env 덮어쓰기
+docker run --env KEY=VALUE {iamge-name}
+
+# 이미지 다운로드
+docker pull {image-name}
+```
+
+1회성 로그는 `-d` 옵션 없이 사용
+
+---
+
+### Container Life-cycle
