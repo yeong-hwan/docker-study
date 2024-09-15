@@ -51,3 +51,52 @@ hypervisor 소프트웨어가 시스템 콜을 통역해주는 역할
 > Host OS Kernel을 공유한다.
 
 오버헤드가 작다 -> HW 리소스 사용 요청이 효율적이다.
+
+LXC는 사용자가 직접 컨트롤하기 어렵다.
+`Docker`는 이러한 컨테이너 격리 기술을 활용할 수 있게 도와준다.
+
+---
+
+## Docker
+
+`Container Platform` : Docker와 같은 컨테이너 가상화 도구 
+
+<p align="center">
+  <img src="./imgs/container-platform.png" width="100%">
+</p>
+
+- `컨테이너 엔진`과 `컨테이너 런타임`으로 구성됨
+  - 컨테이너 엔진 : 사용자 요청 받아 컨테이너 관리
+  - 컨테이너 런타임 : 직접 커널과 통신하며 **실제 격리 공간 생성**
+    - Docker는 `RUNC`라는 컨테이너 런타임을 사용하며, OCI 표준에 맞는 다른 런타임도 가능
+
+### 동작원리
+
+<p align="center">
+  <img src="./imgs/docker-architecture.png" width="100%">
+</p>
+
+도커는 client-server 모델로 실행된다.
+Docker Daemon이 서버처럼 동작한다.
+- Daemon : 서버에서 지속적으로 실행되는 소프트웨어
+- API : 데이터를 주고 받는 규약
+
+```bash
+docker version
+docker info
+
+docker --help
+docker ([management-commend]) [command]
+```
+
+```bash
+# 컨테이너 실행
+docker run {image-name}
+
+# 컨테이너 삭제
+docker rm {container-name / id} 
+```
+
+```bash
+docker run -p 80:80 --name nginx-test nginx
+```
