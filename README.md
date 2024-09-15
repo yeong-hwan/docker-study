@@ -81,6 +81,8 @@ Docker Daemon이 서버처럼 동작한다.
 - Daemon : 서버에서 지속적으로 실행되는 소프트웨어
 - API : 데이터를 주고 받는 규약
 
+### Basic Commands
+
 ```bash
 docker version
 docker info
@@ -100,3 +102,32 @@ docker rm {container-name / id}
 ```bash
 docker run -p 80:80 --name nginx-test nginx
 ```
+
+---
+
+## Image
+
+Image : 파일 시스템의 특정 시점을 저장해 놓은 압축 파일
+
+- 프로그램 : Disk에 저장된 실행 가능한 SW
+- 프로세스 : 프로그램이 매모라에 올라가 실행 상태임
+
+- 이미지 : Disk에 저장된 실행 가능한 SW
+- 컨테이너 : 이미지가 메모리에 올라가 실행 상태임
+  - 이미지 1개로 여러 컨테이너 실행 가능
+  - 컨테이너 실행 시 프로세스도 함께 실행
+
+### Image Command
+
+```bash
+# 백그라운드(-d)에서 컨테이너 실행
+docker run -d --name {container-name} {image-name}
+
+# 실행 중인 컨테이너 리스트 조회
+docker ps 
+
+# 실행 중인 컨테이너 삭제
+docker rm -f {container-name}
+```
+
+### Image-metadata
