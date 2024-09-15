@@ -70,7 +70,7 @@ LXC는 사용자가 직접 컨트롤하기 어렵다.
   - 컨테이너 런타임 : 직접 커널과 통신하며 **실제 격리 공간 생성**
     - Docker는 `RUNC`라는 컨테이너 런타임을 사용하며, OCI 표준에 맞는 다른 런타임도 가능
 
-### 동작원리
+### Architecture
 
 <p align="center">
   <img src="./imgs/docker-architecture.png" width="100%">
@@ -162,6 +162,31 @@ docker pull {image-name}
 
 1회성 로그는 `-d` 옵션 없이 사용
 
----
-
 ### Container Life-cycle
+
+
+<p align="center">
+  <img src="./imgs/life-cycle.png" width="100%">
+</p>
+
+- create : image를 container로 만든다. (아직 리소스 사용 X)
+- start : 컨테이너 metadata의 cmd 값으로 컨테이가 running 상태가 됨.
+- run : create + start
+- pause : 현재 상태를 메모리에 저장(CPU는 사용하지 않고 매모리만 사용)
+- stop : 컨테이너의 프로세스 중단(메모리와 CPU 사용 모두 중단)
+- rm : 컨테이너 삭제
+
+```bash
+# 컨테이너 실행 및 출력 연결
+docker start -i {container-name}
+
+# 컨테이너 로그 조회
+docker logs {container-name}
+
+# 실시간 로그 조회
+docker logs -f {container-name}
+```
+
+--- 
+
+## Image Registry
