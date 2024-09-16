@@ -190,3 +190,46 @@ docker logs -f {container-name}
 --- 
 
 ## Image Registry
+> 도커 이미지를 저장하여 공유하거나 다운 받는다
+`Docker Hub`가 대표적인 이미지 레지스트리
+
+- 이미지 공유/다운로드
+- 이미지 검색
+- 이미지 버전 관리
+- 보안 및 권한 관리
+- 파이프라인(자동 배포, 알림 등)
+
+### Registry Flow
+
+<p align="center">
+  <img src="./imgs/registry-flow.png" width="80%">
+</p>
+
+로컬에 없으면 다운 받고, 이미 다운 받아서 로컬에 있다면 로컬에서 이미지 실행
+
+- 도커허브 : 퍼블릭 레지스트리
+- 사내 : 프라이빗 레지스트리
+  - 직접 서버에 레지스트리 설치(HARBOR, Docker Private Registry)
+  - public 클라우드(AWS ECR, Azure Container Registry)
+
+### Image Naming Rule
+
+<p align="center">
+  <img src="./imgs/image-naming-rule.png" width="80%">
+</p>
+
+> 레지스트리주소/프로젝트명/이미지명:이미지태그
+
+### Registry Command
+
+```bash
+# 로컬 스토리지로 이미지 다운로드
+docker pull {image-name}
+
+# 로컬 스토리지의 이미지명 추가
+docker tag {exisiting-image-name} {adding-image-name}
+
+# 레지스트리에 이미지 업로드
+docker push {image-name}
+```
+
