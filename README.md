@@ -231,5 +231,59 @@ docker tag {exisiting-image-name} {adding-image-name}
 
 # 레지스트리에 이미지 업로드
 docker push {image-name}
+
+# 로컬 스토리지 이미지 삭제
+docker image rm {image-name}
+
+
+docker login
+docker logout
 ```
 
+## Image Build
+
+### Layer File System
+
+<p align="center">
+  <img src="./imgs/layered-file-system.png" width="80%">
+</p>
+
+- 각각의 레이어는 이미지의 일부분이다.
+- 레이어 구조는 재사용에 유리하다.
+- 이미지 전송, 저장에 스토리지, 네트워크 사용량을 줄일 수 있다.
+
+<p align="center">
+  <img src="./imgs/nginx-layer.png" width="100%">
+  </br>
+  </br>
+  <img src="./imgs/container-layer.png" width="100%">
+</p>
+
+- Nignx 설정, 설치, 파일 시스템이 동일할 경우 공유 가능
+- 이전(하위) 레이어의 변경사항만 추가로 관리하면 됨.
+- 컨테이너 레이어는 읽기, 쓰기 모두 가능함
+
+### Iamge Layer Command
+
+```bash
+# 이미지의 레이어 이력 조회
+docker image history {image-name}
+
+```
+
+<p align="center">
+  <img src="./imgs/image-history.png" width="80%">
+</p>
+
+- `COPY` : 이미지 파일을 기존 레이어에 붙여넣기
+
+<p align="center">
+  <img src="./imgs/layer-hash.png" width="100%">
+  </br>
+  </br>
+  <img src="./imgs/nginx-layering.png" width="100%">
+</p>
+
+- **CoW(Copy-on-Write)** : 다음 레이어에서 이전 레이어의 특정 파일을 수정할 때, 복사본을 만들어서 변경사항 적용. 원래 레이어는 수정되지 않고 원본 유지됨
+- **Immutable Layer** : 각 이미지 레이어는 불변, 한 번 생성되면 변경 X. 일관성 유지 및 안전하게 공유
+- **Caching** : 이미 빌드된 레이어 재사용 가능
