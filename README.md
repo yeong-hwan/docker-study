@@ -268,7 +268,6 @@ docker logout
 ```bash
 # 이미지의 레이어 이력 조회
 docker image history {image-name}
-
 ```
 
 <p align="center">
@@ -287,3 +286,38 @@ docker image history {image-name}
 - **CoW(Copy-on-Write)** : 다음 레이어에서 이전 레이어의 특정 파일을 수정할 때, 복사본을 만들어서 변경사항 적용. 원래 레이어는 수정되지 않고 원본 유지됨
 - **Immutable Layer** : 각 이미지 레이어는 불변, 한 번 생성되면 변경 X. 일관성 유지 및 안전하게 공유
 - **Caching** : 이미 빌드된 레이어 재사용 가능
+
+## Image Build 
+
+### Image Commit
+
+<p align="center">
+  <img src="./imgs/commit.png" width="80%">
+</p>
+
+이미지를 만드는 2가지 방법
+
+1. Commit : 실행 중인 컨테이너를 그 상태 그대로 이미지로 만듬
+2. Build(Preferred) :  Docker File 명세를 통해서 만듬. Commit 기반
+
+<p align="center">
+  <img src="./imgs/image-commit.png" width="80%">
+</p>
+
+- 지금까지는 이미지에서 컨테이너로 실행
+- 이번엔 반대로 커밋으로 컨테이너 상태를 이미지로 생성
+
+### Procedure
+- `docker run` 명령어로 nignx 이미지를 실행하면 nginx 이미지 위에 컨테이너 레이어 생성
+- nginx 이미지에 있던 파일을 카피해서 컨테이너 레이어에서 수정, 수정된 파일을 write
+- `Commit` 기능으로 수정된 컨테이너 레이어를 포함한 모든 레이어의 상태를 이미지로 저장
+
+
+### Commit Command
+```bash
+# 컨테이너 실행과 동시에 터미널 접속
+docker run -it --name {container-name} {image-name} bin/bash
+
+# 실행 중인 컨테이너를 이미지로 생성
+docker commit -m {commit-name} {running-container-name} {create-image-name}
+```
